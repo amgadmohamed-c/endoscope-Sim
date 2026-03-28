@@ -1,32 +1,33 @@
 # Endoscope Simulator (EndoSim)
 
-A real-time educational simulator for endoscopic navigation and patient-monitoring signals.
-The project combines a Three.js 3D viewport with a React dashboard to emulate procedure depth, scenario changes, and live physiological sensor behavior.
+EndoSim is a real-time educational simulator for endoscopic navigation and physiological monitoring.
+It combines a Three.js viewport with a React dashboard to emulate scope movement, scenario-specific tissue behavior, sensor trends, and alarm handling.
 
 ## Overview
 
-EndoSim is designed for course/lab demonstration of medical monitoring logic during endoscopic procedures.
-It includes:
+This project was built for coursework/lab demonstration of medical monitoring and decision support concepts during endoscopic procedures.
 
-- A procedural 3D tunnel environment (colon-like anatomy) rendered with Three.js.
-- Multiple clinical scenarios (healthy, polyp, bleeding, stricture).
-- Mode-dependent alarm thresholds (diagnostic, therapeutic, emergency).
-- Live sensor simulation with trends and warnings.
-- A findings log for key events (scenario load, depth milestones, alarms).
+Main capabilities:
+
+- Real-time 3D tunnel navigation in a colon-like environment.
+- Scenario switching with different baseline patient states.
+- Mode-dependent safety thresholds (diagnostic, therapeutic, emergency).
+- Simulated sensor telemetry with trend charts and alarm notifications.
+- Findings log with timestamped procedure events.
 
 ## Features
 
-- Real-time 3D navigation with keyboard + mouse input.
-- Dynamic depth tracking with milestone logging every 5 cm.
-- Sensor simulation:
-	- Temperature (deg C)
-	- Pressure (mmHg)
-	- Flow rate (L/min)
-	- Light level (%)
-- Closed-loop illumination panel (setpoint vs actual).
-- Two history charts (temperature + pressure).
-- Alarm ring and danger/warn states based on selected mode thresholds.
-- Therapeutic and emergency visual effects in the simulation engine.
+- 3D procedural viewport powered by Three.js.
+- Continuous depth tracking with milestone logging every 5 cm.
+- Live sensors:
+  - Temperature (deg C)
+  - Pressure (mmHg)
+  - Flow (L/min)
+  - Light level (%)
+- Closed-loop illumination panel (setpoint vs measured value).
+- Temperature and pressure history charts.
+- Alarm states with visual and audio feedback.
+- Therapeutic interaction flow for damaged tissue (mode-specific behavior).
 
 ## Tech Stack
 
@@ -42,8 +43,11 @@ endoscope-Sim/
 |- public/
 |- src/
 |  |- components/
+|  |  |- CameraPanel.jsx
 |  |  |- Dashboard.jsx
 |  |  |- FindingsLog.jsx
+|  |  |- HistoryTable.jsx
+|  |  |- ImuReadout.jsx
 |  |  |- MetricCard.jsx
 |  |  |- ScenarioSelector.jsx
 |  |  |- SensorChart.jsx
@@ -51,14 +55,18 @@ endoscope-Sim/
 |  |- engine/
 |  |  |- EndoEngine.js
 |  |- hooks/
+|  |  |- useAlarmSound.js
 |  |  |- useGameLoop.js
+|  |  |- useNotifications.js
 |  |  |- useSensors.js
 |  |- App.jsx
+|  |- App.module.css
 |  |- constants.js
 |  |- index.css
 |  |- main.jsx
 |- index.html
 |- package.json
+|- README.md
 |- vite.config.js
 ```
 
@@ -66,24 +74,24 @@ endoscope-Sim/
 
 ### Prerequisites
 
-- Node.js 18+ (recommended)
-- npm 9+
+- Node.js 18 or newer
+- npm 9 or newer
 
-### Install
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Run (Development)
+### Run in Development
 
 ```bash
 npm run dev
 ```
 
-Vite will print a local URL (usually http://localhost:5173).
+Vite prints the local URL in terminal (commonly `http://localhost:5173`).
 
-### Build (Production)
+### Build for Production
 
 ```bash
 npm run build
@@ -97,60 +105,56 @@ npm run preview
 
 ## Controls
 
-- W / S: advance / retreat scope
-- A / D: rotate view
+- `W` / `S`: advance / retreat scope
+- `A` / `D`: rotate view
 - Mouse: look around (click viewport to lock pointer)
 
-Mode-specific behavior:
+Mode behavior:
 
-- Diagnostic: navigate and observe.
-- Therapeutic: interact with damaged tissue to apply treatment.
-- Emergency: active hemorrhage behavior; switch to therapeutic to treat.
+- Diagnostic: inspect and navigate.
+- Therapeutic: hover/click target tissue to cauterize.
+- Emergency: active hemorrhage presentation; switch to therapeutic to intervene.
 
 ## Scenarios
 
-Defined in src/constants.js:
+Defined in `src/constants.js`:
 
-- healthy: baseline stable values
-- polyp: elevated risk and moderate abnormalities
-- bleed: high acuity with low flow and high pressure/temperature tendency
-- stricture: narrowed lumen with increased pressure and reduced flow
+- `healthy`: baseline stable values.
+- `polyp`: moderate risk elevation.
+- `bleed`: high-acuity state with low flow and elevated pressure/temperature tendency.
+- `stricture`: narrowed lumen with elevated pressure and reduced flow.
 
-## Mode Thresholds (Alarm Logic)
+## Alarm Thresholds by Mode
 
-Alarm conditions are mode-dependent and triggered when any metric crosses threshold:
+An alarm triggers when any metric crosses its mode threshold.
 
 - Diagnostic: temp > 38.5, pressure > 20, flow < 0.5
 - Therapeutic: temp > 38.0, pressure > 17, flow < 0.8
 - Emergency: temp > 37.8, pressure > 14, flow < 1.0
 
-The more urgent the mode, the stricter the limits.
+More urgent modes use stricter limits.
 
 ## Logging and Telemetry
 
-The findings log records:
+Findings log includes:
 
-- initialization and scenario loading
-- depth milestones (every 5 cm)
-- periodic alarm events with metric values
+- System initialization and scenario changes
+- Depth milestones (5 cm intervals)
+- Alarm events with measured values
+- Alarm acknowledgement events
 
-Sensor updates occur on a fixed tick (~0.5 s), while rendering uses requestAnimationFrame.
+Runtime behavior:
 
-## Notes for Developers
+- Sensor simulation updates on a fixed tick (~0.5 s).
+- Rendering and scene updates run via `requestAnimationFrame`.
 
-- Core app orchestration: src/App.jsx
-- Simulation + visual effects: src/engine/EndoEngine.js
-- Sensor generation + status classification: src/hooks/useSensors.js
-- Dashboard/UI composition: src/components/
+## Developer Notes
 
-## Future Improvements
-
-- Add configurable scenario editor from UI.
-- Add session export for findings log and trends.
-- Add automated tests for sensor threshold logic.
-- Add internationalization and accessibility audit.
+- Core state and orchestration: `src/App.jsx`
+- Engine and scene logic: `src/engine/EndoEngine.js`
+- Sensor generation and alert logic: `src/hooks/useSensors.js`
+- UI and dashboard composition: `src/components/`
 
 ## License
 
-This project is currently for educational/coursework use.
-
+This project is intended for educational/coursework use.
