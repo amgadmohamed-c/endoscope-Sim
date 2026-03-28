@@ -5,6 +5,29 @@
   font-size: 8px;
   color: var(--muted);
   letter-spacing: 2.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exportBtn {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  border: 1px solid rgba(0,210,170,0.30);
+  border-radius: 4px;
+  padding: 3px 8px;
+  background: rgba(0,210,170,0.05);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.exportBtn:hover {
+  background: rgba(0,210,170,0.14);
+  border-color: var(--accent);
+}
+.exportBtn:active {
+  transform: scale(0.96);
 }
 
 .scroll {

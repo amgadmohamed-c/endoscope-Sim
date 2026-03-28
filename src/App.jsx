@@ -3,6 +3,7 @@ import Viewport from './components/Viewport'
 import Dashboard from './components/Dashboard'
 import { MODES, HISTORY_LEN } from './constants'
 import { simulateSensors, getSensorStatus, isAlarming } from './hooks/useSensors'
+import { useNotifications } from './hooks/useNotifications'
 import styles from './App.module.css'
 
 const INITIAL_SENSORS = { temp: 37.2, pressure: 12.0, flow: 1.80, light: 75 }
@@ -34,7 +35,10 @@ export default function App() {
     { msg: 'Scenario: HEALTHY COLON', type: 'info', time: '00:00' },
   ])
 
-  // Mutable refs for values used in the game loop (avoids stale closures)
+  // ── Notifications ─────────────────────────────────────────────
+  const notify = useNotifications()
+
+  // Mutable refs
   const procTimeRef    = useRef(0)
   const sensorTickRef  = useRef(0)
   const lastAlarmRef   = useRef(0)
@@ -56,19 +60,14 @@ export default function App() {
     setLogEntries(prev => [{ msg, type, time }, ...prev].slice(0, 40))
   }, [])
 
-  // Called every frame by Viewport's game loop via onDepthChange
   const handleDepthChange = useCallback((d) => {
     setDepth(d)
-
-    // Depth milestone logging
     if (Math.floor(d / 5) > Math.floor(lastDepthRef.current / 5)) {
       addLog(`Depth reached: ${d.toFixed(0)} cm`)
       lastDepthRef.current = d
     }
   }, [addLog])
 
-  // Sensor tick — called by Viewport every 0.5s via the game loop
-  // We use a ref-based approach: Viewport calls this from its RAF
   const onSensorTick = useCallback((dt, t, depth) => {
     procTimeRef.current += dt
     sensorTickRef.current += dt
@@ -90,11 +89,24 @@ export default function App() {
 
     if (alarm && procTimeRef.current - lastAlarmRef.current > 4) {
       lastAlarmRef.current = procTimeRef.current
-      if (s.temp     > thr.temp)     addLog(`HIGH TEMP: ${s.temp.toFixed(1)}°C`,           'danger')
-      if (s.pressure > thr.pressure) addLog(`HIGH PRESSURE: ${s.pressure.toFixed(1)} mmHg`,'danger')
-      if (s.flow     < thr.flow)     addLog(`LOW FLOW: ${s.flow.toFixed(2)} L/min`,         'alert')
+
+      if (s.temp     > thr.temp) {
+        const msg = `HIGH TEMP: ${s.temp.toFixed(1)}°C`
+        addLog(msg, 'danger')
+        notify(msg, { tag: 'alarm-temp' })
+      }
+      if (s.pressure > thr.pressure) {
+        const msg = `HIGH PRESSURE: ${s.pressure.toFixed(1)} mmHg`
+        addLog(msg, 'danger')
+        notify(msg, { tag: 'alarm-pressure' })
+      }
+      if (s.flow < thr.flow) {
+        const msg = `LOW FLOW: ${s.flow.toFixed(2)} L/min`
+        addLog(msg, 'alert')
+        notify(msg, { tag: 'alarm-flow' })
+      }
     }
-  }, [addLog])
+  }, [addLog, notify])
 
   const handleScenarioChange = (id) => {
     setScenario(id)
