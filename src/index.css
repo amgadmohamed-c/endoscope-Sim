@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #07090c;
+  --surface:  #0c1017;
+  --surface2: #111820;
+  --border:   rgba(0,210,170,0.12);
+  --accent:   #00d2aa;
+  --accent2:  #0096ff;
+  --warn:     #ffb020;
+  --danger:   #ff3030;
+  --text:     #bdd0d8;
+  --muted:    #3d5563;
+  --mono:     'Space Mono', monospace;
+  --sans:     'IBM Plex Sans', sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--mono);
+  border: none;
+  background: none;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  outline: none;
+  width: 100%;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}

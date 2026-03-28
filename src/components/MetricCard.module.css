@@ -1,0 +1,51 @@
+.card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: border-color 0.3s;
+}
+.card.warn   { border-color: rgba(255,176,32,0.35); }
+.card.danger { border-color: rgba(255,48,48,0.5); animation: pulse 0.5s infinite; }
+
+@keyframes pulse {
+  0%, 100% { border-color: rgba(255,48,48,0.4); }
+  50%       { border-color: rgba(255,48,48,0.9); }
+}
+
+.name {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.value {
+  font-family: var(--mono);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.unit {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  margin-left: 2px;
+}
+
+.bar {
+  height: 2px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  margin-top: 7px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s, background-color 0.3s;
+}

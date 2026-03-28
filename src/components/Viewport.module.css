@@ -1,0 +1,213 @@
+.viewport {
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+.canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.92) 100%);
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,210,170,0.012) 2px,
+    rgba(0,210,170,0.012) 4px
+  );
+}
+
+.crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.crosshair::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0,210,170,0.55);
+  transform: translateY(-50%);
+}
+.crosshair::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(0,210,170,0.55);
+  transform: translateX(-50%);
+}
+
+.alarmRing {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 3px solid var(--danger);
+  box-shadow: inset 0 0 50px rgba(255,48,48,0.15);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.alarmRing.on {
+  animation: alarmpulse 0.45s infinite;
+}
+@keyframes alarmpulse {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 1; }
+}
+
+.scenarioTag {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: rgba(0,210,170,0.04);
+  pointer-events: none;
+  transition: all 0.4s;
+  white-space: nowrap;
+}
+.scenarioTag.warn   { border-color: var(--warn);   color: var(--warn);   background: rgba(255,176,32,0.04); }
+.scenarioTag.danger { border-color: var(--danger);  color: var(--danger); background: rgba(255,48,48,0.04); }
+
+.depthHud {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.controlsHint {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  line-height: 2;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+.illumHud {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  text-align: right;
+  pointer-events: none;
+  letter-spacing: 1px;
+  line-height: 1.9;
+}
+.illumHud span { color: var(--accent); }
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 10;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(0,210,170,0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loadingText {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 3px;
+}
+
+
+/* ── Mode HUD ─────────────────────────────────────────────────── */
+.modeHud {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid;
+  backdrop-filter: blur(2px);
+}
+.modeHud[data-mode="diag"] {
+  border-color: rgba(0,210,170,0.35);
+  background: rgba(0,210,170,0.06);
+  color: var(--accent);
+}
+.modeHud[data-mode="ther"] {
+  border-color: rgba(80,255,100,0.50);
+  background: rgba(80,255,100,0.08);
+  color: rgb(80,255,100);
+}
+.modeHud[data-mode="emer"] {
+  border-color: rgba(255,48,48,0.60);
+  background: rgba(255,48,48,0.10);
+  color: var(--danger);
+  animation: emerPulse 1s infinite;
+}
+@keyframes emerPulse {
+  0%,100%  { box-shadow: 0 0 0 0 rgba(255,48,48,0); }
+  50%      { box-shadow: 0 0 12px 3px rgba(255,48,48,0.35); }
+}
+.modeIcon { font-size: 13px; }
+.modeDesc {
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  opacity: 0.75;
+  max-width: 200px;
+  line-height: 1.6;
+}

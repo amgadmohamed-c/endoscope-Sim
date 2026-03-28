@@ -1,0 +1,14 @@
+.block { margin-bottom: 7px; }
+
+.label {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+
+.box {
+  height: 68px;
+  position: relative;
+}

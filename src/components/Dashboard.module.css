@@ -1,0 +1,66 @@
+.dashboard {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.section {
+  border-bottom: 1px solid var(--border);
+  padding: 11px 14px;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.illumControl { display: flex; flex-direction: column; gap: 7px; }
+
+.illumRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.illumKey {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  width: 52px;
+  letter-spacing: 1px;
+}
+
+.illumNum {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  width: 30px;
+  text-align: right;
+}
+
+.actualTrack {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.actualFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.9s;
+}
