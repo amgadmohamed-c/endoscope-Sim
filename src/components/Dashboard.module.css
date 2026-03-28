@@ -3,12 +3,27 @@
   border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* KEY FIX: overflow-y scroll instead of hidden */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Thin custom scrollbar — matches the app aesthetic */
+.dashboard::-webkit-scrollbar {
+  width: 3px;
+}
+.dashboard::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dashboard::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
 }
 
 .section {
   border-bottom: 1px solid var(--border);
   padding: 11px 14px;
+  flex-shrink: 0;
 }
 
 .label {
@@ -26,7 +41,11 @@
   gap: 7px;
 }
 
-.illumControl { display: flex; flex-direction: column; gap: 7px; }
+.illumControl {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
 
 .illumRow {
   display: flex;
@@ -53,7 +72,7 @@
 .actualTrack {
   flex: 1;
   height: 3px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 2px;
   overflow: hidden;
 }

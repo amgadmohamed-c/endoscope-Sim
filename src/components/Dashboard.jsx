@@ -2,6 +2,8 @@ import ScenarioSelector from './ScenarioSelector'
 import MetricCard from './MetricCard'
 import SensorChart from './SensorChart'
 import FindingsLog from './FindingsLog'
+import ImuReadout from './ImuReadout'
+import HistoryTable from './HistoryTable'
 import styles from './Dashboard.module.css'
 
 export default function Dashboard({
@@ -9,10 +11,12 @@ export default function Dashboard({
   sensors, sensorStatus,
   tempHistory, pressHistory,
   illuminance, illuminanceActual, onIlluminanceChange,
-  logEntries,
+  logEntries, onAck,
+  depth,
 }) {
   return (
     <div className={styles.dashboard}>
+
       <div className={styles.section}>
         <div className={styles.label}>Scenarios</div>
         <ScenarioSelector current={scenario} onChange={onScenarioChange} />
@@ -57,6 +61,12 @@ export default function Dashboard({
         <SensorChart data={pressHistory} color="#0096ff" label="PRESSURE HISTORY (mmHg)" />
       </div>
 
+      <HistoryTable
+        tempHistory={tempHistory}
+        pressHistory={pressHistory}
+        sensors={sensors}
+      />
+
       <div className={styles.section}>
         <div className={styles.label}>Illumination — Closed Loop</div>
         <div className={styles.illumControl}>
@@ -80,7 +90,10 @@ export default function Dashboard({
         </div>
       </div>
 
-      <FindingsLog entries={logEntries} />
+      <ImuReadout depth={depth} />
+
+      <FindingsLog entries={logEntries} onAck={onAck} />
+
     </div>
   )
 }
