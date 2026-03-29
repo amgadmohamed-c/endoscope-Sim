@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ── Iron Man palette ───────────────────────────── */
+  --bg:       #0a0a0b;          /* near-black chassis  */
+  --surface:  #0f0f11;          /* dark plate          */
+  --surface2: #161618;          /* raised plate        */
+  --border:   rgba(198,140,10,0.18); /* gold border     */
+
+  --accent:   #f0b429;          /* arc-reactor gold    */
+  --accent2:  #e84040;          /* Iron Man red        */
+  --warn:     #ff6a1a;          /* orange warning      */
+  --danger:   #e84040;          /* red alert           */
+
+  --text:     #d4c5a0;          /* warm off-white      */
+  --muted:    #4a3f2a;          /* dark gold-brown     */
+
+  --mono:     'Space Mono', monospace;
+  --sans:     'IBM Plex Sans', sans-serif;
+
+  /* metallic sheen on surfaces */
+  --plate-shine: linear-gradient(135deg, rgba(255,200,60,0.04) 0%, transparent 60%);
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--mono);
+  border: none;
+  background: none;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  height: 3px;
+  background: rgba(198,140,10,0.15);
+  border-radius: 2px;
+  outline: none;
+  width: 100%;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(240,180,41,0.6);
+}

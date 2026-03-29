@@ -1,0 +1,96 @@
+.app {
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-columns: 1fr 350px;
+  height: 100vh;
+}
+
+.header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  background-image: var(--plate-shine);
+  box-shadow: 0 1px 0 rgba(240,180,41,0.08), inset 0 -1px 0 rgba(0,0,0,0.5);
+}
+
+.logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-shadow: 0 0 12px rgba(240,180,41,0.5);
+}
+.logo span { color: var(--muted); }
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent), 0 0 16px rgba(240,180,41,0.4);
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.liveLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.timer {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.modeGroup {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.modeBtn {
+  font-size: 9px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  letter-spacing: 1.5px;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  transition: all 0.2s;
+  background-image: var(--plate-shine);
+}
+
+/* Diagnostic = gold */
+.modeBtn.diag.on {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(240,180,41,0.10);
+  box-shadow: 0 0 8px rgba(240,180,41,0.25), inset 0 0 8px rgba(240,180,41,0.05);
+}
+/* Therapeutic = red */
+.modeBtn.ther.on {
+  border-color: var(--accent2);
+  color: var(--accent2);
+  background: rgba(232,64,64,0.10);
+  box-shadow: 0 0 8px rgba(232,64,64,0.25), inset 0 0 8px rgba(232,64,64,0.05);
+}
+/* Emergency = danger red pulsing */
+.modeBtn.emer.on {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: rgba(232,64,64,0.12);
+  animation: emerBtnPulse 0.8s infinite;
+}
+@keyframes emerBtnPulse {
+  0%,100% { box-shadow: 0 0 6px rgba(232,64,64,0.3); }
+  50%     { box-shadow: 0 0 16px rgba(232,64,64,0.7); }
+}

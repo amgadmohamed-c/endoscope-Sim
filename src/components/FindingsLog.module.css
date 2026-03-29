@@ -1,0 +1,103 @@
+.header {
+  padding: 9px 14px 5px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 2.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  background-image: var(--plate-shine);
+  z-index: 2;
+}
+
+.headerBtns {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.exportBtn {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  border: 1px solid rgba(240,180,41,0.35);
+  border-radius: 3px;
+  padding: 3px 8px;
+  background: rgba(240,180,41,0.06);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.exportBtn:hover {
+  background: rgba(240,180,41,0.16);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(240,180,41,0.2);
+}
+.exportBtn:active { transform: scale(0.96); }
+
+.ackBtn {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--danger);
+  border: 1px solid rgba(232,64,64,0.4);
+  border-radius: 3px;
+  padding: 3px 8px;
+  background: rgba(232,64,64,0.07);
+  cursor: pointer;
+  transition: all 0.18s;
+  animation: ackPulse 1s infinite;
+}
+.ackBtn:hover {
+  background: rgba(232,64,64,0.16);
+  border-color: var(--danger);
+}
+.ackBtn:active { transform: scale(0.96); }
+
+@keyframes ackPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+.scroll {
+  padding: 6px 14px 14px;
+}
+
+.entry {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  line-height: 1.8;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(198,140,10,0.05);
+  color: var(--muted);
+  animation: slideIn 0.25s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.ts {
+  color: var(--accent);
+  margin-right: 7px;
+  text-shadow: 0 0 6px rgba(240,180,41,0.4);
+}
+.entry.alert  { color: var(--warn); }
+.entry.danger { color: var(--danger); }
+.entry.info   { color: #d4a030; }
+
+.entry.acked {
+  opacity: 0.4;
+  text-decoration: line-through;
+  text-decoration-color: rgba(232,64,64,0.3);
+}
+.ackTag {
+  color: var(--accent);
+  margin-left: 4px;
+  font-size: 7px;
+}
